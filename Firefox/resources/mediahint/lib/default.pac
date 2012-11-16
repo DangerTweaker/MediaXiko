@@ -1,0 +1,46 @@
+function FindProxyForURL(url, host) {
+	var basic_files = [/.*\.gif/, /.*\.png/, /.*\.jpg/, /.*\.mp3/, /.*\.js/, /.*\.css/, /.*\.mp4/, /.*\.flv/, /.*\.swf/];
+	for(var i=0;i<basic_files.length;i++){
+		if(url.match(basic_files[i])){
+			return 'DIRECT';
+		}
+	}
+	var usa = ['hulu.com', 'netflix.com', 'pandora.com'];
+
+	var usa2 =['cbs.com', 'imrworldwide.com', 'can.cbs.com', 'edgesuite.net', 'theplatform.com', 'innovid.com', 'ocp.cbs.com', 'last.fm'];
+
+	var uk = ['bbc.co.uk'];
+
+	var direct = ['assets.hulu.com', 'll.a.hulu.com', 'ads.hulu.com', 'stats.pandora.com', 'blog.netflix.com', 'nordicsblog.netflix.com', 'blog.pandora.com', 'mads.cbs.com'];
+		
+	for(var i=0;i<direct.length;i++){
+		if(host.indexOf(direct[i]) > -1){
+			return 'DIRECT';
+		}
+	}
+	if(host.match(/audio.*\.pandora\.com/) || host.match(/const.*\.pandora\.com/) || host.match(/mediaserver.*\.pandora\.com/) || host.match(/cont.*\.pandora\.com/)){
+		return 'DIRECT';
+	}
+
+	//for Us
+	for(var i=0;i<usa.length;i++){
+		if(host.indexOf(usa[i]) > -1){
+			return 'PROXY 50.116.59.63:80';
+		}
+	}
+
+	//for Us2
+	for(var i=0;i<usa2.length;i++){
+		if(host.indexOf(usa2[i]) > -1){
+			return 'PROXY 198.27.100.200:8080; PROXY 199.193.248.26:3128; PROXY 216.17.106.16:3128';			
+		}
+	}
+
+	//for uk
+	for(var i=0;i<uk.length;i++){
+		if(host.indexOf(uk[i]) > -1){
+			return 'PROXY 89.16.175.204:3128';			
+		}
+	}
+	return 'DIRECT';
+}
